@@ -78,11 +78,15 @@ def _subprocess_call(
             raise subprocess.SubprocessError(textwrap.dedent(err_msg)) from e
         else:
             raise e
-    return (
+    result = (
         proc.returncode,
         out.decode("utf-8", "surrogateescape").strip(),
         err.decode("utf-8", "surrogateescape").strip(),
     )
+
+    print("command:\n", shlex.join(cmd))
+    print(result)
+    return result
 
 
 class SCMVersion(NamedTuple):
